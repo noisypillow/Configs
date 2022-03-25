@@ -1,7 +1,33 @@
-:set number
-:set relativenumber
-:set autoindent
-:set mouse=a
+set number
+set relativenumber
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set smarttab
+set autoindent
+set mouse=a
+
+lua vim.api.nvim_set_keymap("", "<Space>", "<Nop>", { noremap = true, silent = true })
+lua vim.g.mapleader=" "
+lua vim.g.maplocalleader=" "
+set timeoutlen=0
+
+set termguicolors
+set background=dark
+
+syntax enable
+set encoding=utf-8
+set title
+
+set background=dark
+set nobackup
+set hlsearch
+set showcmd
+set cmdheight=1
+set laststatus=2
+set scrolloff=10
+set cursorline
+set cursorcolumn
 
 
 
@@ -9,6 +35,7 @@ call plug#begin()
 
 Plug 'https://github.com/nvim-lua/plenary.nvim'
 Plug 'https://github.com/nvim-telescope/telescope.nvim'
+Plug 'https://github.com/neovim/nvim-lspconfig'
 Plug 'https://github.com/glepnir/dashboard-nvim'
 Plug 'https://github.com/nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'https://github.com/ellisonleao/glow.nvim'
@@ -22,6 +49,7 @@ Plug 'https://github.com/filipdutescu/renamer.nvim', { 'branch': 'master' }
 Plug 'https://github.com/folke/which-key.nvim'
 Plug 'https://github.com/ggandor/lightspeed.nvim'
 Plug 'https://github.com/p00f/nvim-ts-rainbow'
+Plug 'https://github.com/windwp/nvim-autopairs'
 
 "Colorschemes
 
@@ -32,31 +60,27 @@ Plug 'https://github.com/andreypopp/vim-colors-plain'
 call plug#end()
 
 
-:set termguicolors
-":set background=dark
-
 lua << EOF
 local catppuccin = require("catppuccin")
 catppuccin.setup({transparent_background = true})
 EOF
 
-colorscheme plain " set colorscheme
-
-
-
-let mapleader=" " " set leader key
-:set timeoutlen=0
+colorscheme catppuccin " set colorscheme
 
 
 " Treesitter
 lua << EOF
 require("nvim-treesitter.configs").setup {
+    highlight = {
+        -- `false` will disable the whole extension
+        enable = true,
+    },
 	rainbow = {
-    enable = true,
-    -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-    extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-    max_file_lines = nil, -- Do not enable for files with more than n lines, int
-  }
+        enable = true,
+        -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+        extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+        max_file_lines = nil, -- Do not enable for files with more than n lines, int
+    }
 }
 EOF
 
@@ -65,13 +89,13 @@ EOF
 let g:dashboard_default_executive ='telescope'
 
 " Colorizer
-lua require('colorizer').setup()
+lua require('colorizer').setup{}
 
 " Neoscroll
-lua require('neoscroll').setup()
+lua require('neoscroll').setup{}
 
 " Renamer
-lua require('renamer').setup()
+lua require('renamer').setup{}
 nnoremap <silent> <leader>rn <cmd>lua require('renamer').rename()<cr>
 vnoremap <silent> <leader>rn <cmd>lua require('renamer').rename()<cr>
 
@@ -81,15 +105,28 @@ let g:glow_style = "dark"
 noremap <leader>p :Glow<CR>
 
 " FTerm
+lua << EOF
+require'FTerm'.setup({
+    border = 'rounded',
+    blend = 0,
+    dimensions  = {
+        height = 0.5,
+        width = 0.5,
+    },
+})
+EOF
 nnoremap <leader>tt :lua require('FTerm').toggle()<CR>
 
-" Nabla
-nnoremap <leader>la :lua require('nabla').popup()<CR>
-
 " Which key
-lua require('which-key').setup()
+lua require('which-key').setup{}
 
+" Autopairs
+lua require('nvim-autopairs').setup{}
 
+" LSP config
+lua require'lspconfig'.ocamllsp.setup{}
+lua require'lspconfig'.pyright.setup{}
+lua vim.lsp.set_log_level("debug")
 
 
 
