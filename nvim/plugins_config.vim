@@ -23,7 +23,36 @@ EOF
 
 
 " Dashboard
+let g:dashboard_custom_header =[
+    \'',
+    \' ⣿⣿⣷⡁⢆⠈⠕⢕⢂⢕⢂⢕⢂⢔⢂⢕⢄⠂⣂⠂⠆⢂⢕⢂⢕⢂⢕⢂⢕⢂ ',
+    \' ⣿⣿⣿⡷⠊⡢⡹⣦⡑⢂⢕⢂⢕⢂⢕⢂⠕⠔⠌⠝⠛⠶⠶⢶⣦⣄⢂⢕⢂⢕ ',
+    \' ⣿⣿⠏⣠⣾⣦⡐⢌⢿⣷⣦⣅⡑⠕⠡⠐⢿⠿⣛⠟⠛⠛⠛⠛⠡⢷⡈⢂⢕⢂ ',
+    \' ⠟⣡⣾⣿⣿⣿⣿⣦⣑⠝⢿⣿⣿⣿⣿⣿⡵⢁⣤⣶⣶⣿⢿⢿⢿⡟⢻⣤⢑⢂ ',
+    \' ⣾⣿⣿⡿⢟⣛⣻⣿⣿⣿⣦⣬⣙⣻⣿⣿⣷⣿⣿⢟⢝⢕⢕⢕⢕⢽⣿⣿⣷⣔ ',
+    \' ⣿⣿⠵⠚⠉⢀⣀⣀⣈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣗⢕⢕⢕⢕⢕⢕⣽⣿⣿⣿⣿ ',
+    \' ⢷⣂⣠⣴⣾⡿⡿⡻⡻⣿⣿⣴⣿⣿⣿⣿⣿⣿⣷⣵⣵⣵⣷⣿⣿⣿⣿⣿⣿⡿ ',
+    \' ⢌⠻⣿⡿⡫⡪⡪⡪⡪⣺⣿⣿⣿⣿⣿⠿⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃ ',
+    \' ⠣⡁⠹⡪⡪⡪⡪⣪⣾⣿⣿⣿⣿⠋⠐⢉⢍⢄⢌⠻⣿⣿⣿⣿⣿⣿⣿⣿⠏⠈ ',
+    \' ⡣⡘⢄⠙⣾⣾⣾⣿⣿⣿⣿⣿⣿⡀⢐⢕⢕⢕⢕⢕⡘⣿⣿⣿⣿⣿⣿⠏⠠⠈ ',
+    \' ⠌⢊⢂⢣⠹⣿⣿⣿⣿⣿⣿⣿⣿⣧⢐⢕⢕⢕⢕⢕⢅⣿⣿⣿⣿⡿⢋⢜⠠⠈ ',
+    \' ⠄⠁⠕⢝⡢⠈⠻⣿⣿⣿⣿⣿⣿⣿⣷⣕⣑⣑⣑⣵⣿⣿⣿⡿⢋⢔⢕⣿⠠⠈ ',
+    \' ⠨⡂⡀⢑⢕⡅⠂⠄⠉⠛⠻⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢋⢔⢕⢕⣿⣿⠠⠈ ',
+    \' ⠄⠪⣂⠁⢕⠆⠄⠂⠄⠁⡀⠂⡀⠄⢈⠉⢍⢛⢛⢛⢋⢔⢕⢕⢕⣽⣿⣿⠠⠈ ',
+    \'',
+    \]
+
 let g:dashboard_default_executive ='telescope'
+
+lua << EOF
+vim.g.dashboard_custom_section = {
+    a = { description = { "洛 New File                  SPC d n" }, command = "DashboardNewFile" },
+	b = { description = { "  Recents                   SPC f o" }, command = "Telescope oldfiles" },
+    c = { description = { "  Find File                 SPC f f" }, command = "Telescope find_files" },
+    d = { description = { "  Colorscheme             SPC f c" }, command = "Telescope colorscheme" },
+}
+EOF
+
 
 " Colorizer
 lua require('colorizer').setup{}
@@ -66,7 +95,11 @@ require'FTerm'.setup({
     },
 })
 EOF
-nnoremap <leader>tt :lua require('FTerm').toggle()<CR>
+nnoremap <C-Space> :lua require('FTerm').toggle()<CR>
+inoremap <C-Space> :lua require('FTerm').toggle()<CR>
+tnoremap <C-Space> :lua require('Fterm').toggle()<CR>
+command DuneBuild :lua require('FTerm').scratch({ cmd = 'dune', 'build' }) " custom command for dune
+command Utop :lua require('FTerm').scratch({ cmd = {'utop', '-init', vim.fn.expand('%:t')} })
 
 " Which key
 lua require('which-key').setup{}
@@ -75,5 +108,14 @@ lua require('which-key').setup{}
 lua require('nvim-autopairs').setup{}
 
 " LSP config
-lua require'lspconfig'.ocamllsp.setup{}
-lua require'lspconfig'.pyright.setup{}
+lua require('lspconfig').ocamllsp.setup{on_attach=require('virtualtypes').on_attach}
+lua require('lspconfig').pyright.setup{}
+lua vim.api.nvim_buf_set_keymap(bufnr, "n", "gl", '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', { noremap = true, silent = true })
+
+" Nabla
+nnoremap <leader>m :lua require("nabla").popup()<CR>
+
+
+" LimeLight
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_guifg = 'DarkGray'

@@ -1,4 +1,4 @@
-" set number
+set number
 set relativenumber
 
 set tabstop=4
@@ -9,8 +9,8 @@ set autoindent
 set mouse=a
 
 lua vim.api.nvim_set_keymap("", "<Space>", "<Nop>", { noremap = true, silent = true })
-lua vim.g.mapleader=" "
-lua vim.g.maplocalleader=" "
+let g:mapleader="\<Space>"
+let g:maplocaleader="\<Space>"
 set timeoutlen=0
 
 
@@ -20,7 +20,9 @@ set title
 
 set nobackup
 set hlsearch
-set showcmd
+set noshowcmd
+set noshowmode
+set noruler
 set cmdheight=1
 set laststatus=2
 set scrolloff=10
