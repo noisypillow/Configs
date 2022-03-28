@@ -119,3 +119,6 @@ nnoremap <leader>m :lua require("nabla").popup()<CR>
 " LimeLight
 let g:limelight_conceal_ctermfg = 'gray'
 let g:limelight_conceal_guifg = 'DarkGray'
+
+" Goto preview
+lua require('goto-preview').setup{default_mappings = true}
