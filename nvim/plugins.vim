@@ -25,6 +25,7 @@ Plug 'https://github.com/tpope/vim-eunuch'
 Plug 'https://github.com/jubnzv/virtual-types.nvim'
 Plug 'https://github.com/williamboman/nvim-lsp-installer'
 Plug 'https://github.com/rmagatti/goto-preview'
+Plug 'https://github.com/lewis6991/gitsigns.nvim'
 
 " Colors
 Plug 'https://github.com/norcalli/nvim-colorizer.lua'   " Colors HEX codes
