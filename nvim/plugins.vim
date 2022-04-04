@@ -27,6 +27,7 @@ Plug 'https://github.com/williamboman/nvim-lsp-installer'
 Plug 'https://github.com/rmagatti/goto-preview'
 Plug 'https://github.com/lewis6991/gitsigns.nvim'
 
+
 " Colors
 Plug 'https://github.com/norcalli/nvim-colorizer.lua'   " Colors HEX codes
 Plug 'https://github.com/p00f/nvim-ts-rainbow'          " Colors brackets pairs
