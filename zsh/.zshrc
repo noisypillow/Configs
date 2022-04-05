@@ -254,10 +254,3 @@ if [ -f /etc/zsh_command_not_found ]; then
 fi
 
 eval "$(starship init zsh)"
-eval "$(thefuck --alias)"
-
-# opam configuration
-test -r /home/noisypillow/.opam/opam-init/init.zsh && . /home/noisypillow/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-
-# Created by `pipx` on 2022-01-29 18:13:03
-export PATH="$PATH:/home/noisypillow/.local/bin"
