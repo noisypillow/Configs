@@ -24,6 +24,3 @@ source $NVIM_HOME/settings.vim
 source $NVIM_HOME/plugins_config.vim
 
 source $NVIM_HOME/autocmds.vim
-
-
-echo "(>^.^<)"
