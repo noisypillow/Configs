@@ -13,6 +13,7 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 \| endif
 
 
+source $NVIM_HOME/mappings.vim
 
 call plug#begin()
 source $NVIM_HOME/plugins.vim
@@ -21,3 +22,8 @@ call plug#end()
 source $NVIM_HOME/settings.vim
 
 source $NVIM_HOME/plugins_config.vim
+
+source $NVIM_HOME/autocmds.vim
+
+
+echo "(>^.^<)"

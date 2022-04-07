@@ -8,16 +8,13 @@ set smarttab
 set autoindent
 set mouse=a
 
-lua vim.api.nvim_set_keymap("", "<Space>", "<Nop>", { noremap = true, silent = true })
-let g:mapleader="\<Space>"
-let g:maplocaleader="\<Space>"
 set timeoutlen=0
-
 
 syntax enable
 set encoding=utf-8
 set title
 
+set nowrap
 set nobackup
 set hlsearch
 set noshowcmd
@@ -27,8 +24,11 @@ set cmdheight=1
 set laststatus=2
 set scrolloff=10
 set cursorline
+set splitright
 "set cursorcolumn
 
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
 
 " Colorscheme
 lua require("catppuccin").setup({transparent_background = true})

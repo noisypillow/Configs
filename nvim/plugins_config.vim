@@ -110,7 +110,6 @@ lua require('nvim-autopairs').setup{}
 " LSP config
 lua require('lspconfig').ocamllsp.setup{on_attach=require('virtualtypes').on_attach}
 lua require('lspconfig').pyright.setup{}
-lua vim.api.nvim_buf_set_keymap(bufnr, "n", "gl", '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', { noremap = true, silent = true })
 
 " Nabla
 nnoremap <leader>m :lua require("nabla").popup({border = 'rounded'})<CR>
