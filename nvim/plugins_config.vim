@@ -124,3 +124,6 @@ lua require('goto-preview').setup{default_mappings = true}
 
 " Gitsigns
 lua require('gitsigns').setup{}
+
+" Rust tools
+lua require('rust-tools').setup{}
