@@ -26,7 +26,7 @@ bluetooth_print() {
 
             printf '\n'
         else
-            echo "#2"
+            echo ""
         fi
     done
 }
