@@ -45,7 +45,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init(gears.filesystem.get_configuration_dir() .. "theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
@@ -61,12 +61,13 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    -- awful.layout.suit.floating,
-    awful.layout.suit.tile,
+    -- awful.layout.suit.spiral,
+    awful.layout.suit.floating,
+    -- awful.layout.suit.tile,
     -- awful.layout.suit.tile.left,
     -- awful.layout.suit.tile.bottom,
     -- awful.layout.suit.tile.top,
-    -- awful.layout.suit.fair,
+    awful.layout.suit.fair,
     -- awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
     -- awful.layout.suit.spiral.dwindle,
@@ -100,25 +101,8 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
-local function set_wallpaper(s)
-    -- Wallpaper
-    if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
-        -- If wallpaper is a function, call it with the screen
-        if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
-        end
-        gears.wallpaper.maximized(wallpaper, s, true)
-    end
-end
-
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
-    -- Wallpaper
-    set_wallpaper(s)
-
     -- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
 end)
@@ -352,6 +336,13 @@ awful.rules.rules = {
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen
      }
     },
+    {
+        rule_any = { class = {"Polybar"}},
+        properties = { 
+            focusable = false,
+            border_width = 0
+        }
+    },
 
     -- Floating clients.
     { rule_any = {
@@ -418,6 +409,9 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 beautiful.useless_gap = 5
 
 -- Autostart
-awful.spawn.with_shell("picom") -- transparency
-awful.spawn.with_shell("feh --bg-fill --randomize ~/Documents/Wallpapers/*") -- wallpaper
+awful.spawn.with_shell("picom --config ~/.config/picom/picom.conf") -- transparency
+-- awful.spawn.with_shell("feh --bg-fill --randomize ~/Documents/Wallpapers/*") -- wallpaper
+awful.spawn.with_shell("feh --bg-scale ~/Documents/Wallpapers/dark-cat.png")
 awful.spawn.with_shell("/home/noisypillow/.config/polybar/launch.sh")
+
+naughty.config.defaults['icon_size'] = 80

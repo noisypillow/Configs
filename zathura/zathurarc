@@ -1,0 +1,6 @@
+include catppuccin
+
+set guioptions none
+
+set recolor
+set recolor-keephue
